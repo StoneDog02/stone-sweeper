@@ -46,6 +46,9 @@ const Smiley = styled.button`
   align-items: center;
   transform: translate(-50%);
   cursor: pointer;
+  &:hover {
+    background: #00000099;
+  }
 `;
 
 export default function App() {
