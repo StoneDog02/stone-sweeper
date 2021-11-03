@@ -7,6 +7,17 @@ const GameContainer = styled.div`
   background: rebeccapurple;
 `;
 
+const Timer = styled.div`
+  height: 30px;
+  width: 50px;
+  background: black;
+  color: red;
+`;
+
 export default function App() {
-  return <GameContainer></GameContainer>;
+  return (
+    <GameContainer>
+      <Timer>25</Timer>
+    </GameContainer>
+  );
 }
