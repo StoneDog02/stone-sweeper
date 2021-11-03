@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import { useState } from "react";
 
 const GameContainer = styled.div`
   height: 330px;
@@ -57,6 +58,8 @@ const MineField = styled.div`
   background: grey;
   position: absolute;
   bottom: 0px;
+  display: flex;
+  flex-flow: row wrap;
 `;
 
 const Button = styled.button`
@@ -65,6 +68,23 @@ const Button = styled.button`
   background: grey;
   cursor: pointer;
 `;
+const NoMine = styled.div`
+  height: 30px;
+  width: 30px;
+  background: grey;
+  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+function GameButton() {
+  const [buttonClicked, setButtonClicked] = useState(false);
+  if (buttonClicked) {
+    return <NoMine>1</NoMine>;
+  }
+  return <Button onClick={() => setButtonClicked(true)}>0</Button>;
+}
 
 export default function App() {
   return (
@@ -72,7 +92,9 @@ export default function App() {
       <Timer>25</Timer>
       <FlagCounter>10</FlagCounter>
       <MineField>
-        <Button></Button>
+        {new Array(100).fill(undefined).map((item, i) => (
+          <GameButton />
+        ))}
       </MineField>
       <Smiley>😎</Smiley>
     </GameContainer>
