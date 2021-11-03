@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 const GameContainer = styled.div`
   height: 330px;
-  width: 330px;
+  width: 300px;
   background: rebeccapurple;
   position: absolute;
   top: 50%;
@@ -17,7 +17,7 @@ const Timer = styled.div`
   background: black;
   color: red;
   position: absolute;
-  left: 280px;
+  left: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -53,10 +53,17 @@ const Smiley = styled.button`
 
 const MineField = styled.div`
   height: 300px;
-  width: 330px;
+  width: 300px;
   background: grey;
   position: absolute;
   bottom: 0px;
+`;
+
+const Button = styled.button`
+  height: 30px;
+  width: 30px;
+  background: grey;
+  cursor: pointer;
 `;
 
 export default function App() {
@@ -64,7 +71,9 @@ export default function App() {
     <GameContainer>
       <Timer>25</Timer>
       <FlagCounter>10</FlagCounter>
-      <MineField></MineField>
+      <MineField>
+        <Button></Button>
+      </MineField>
       <Smiley>😎</Smiley>
     </GameContainer>
   );
