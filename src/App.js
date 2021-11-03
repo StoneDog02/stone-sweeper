@@ -51,11 +51,20 @@ const Smiley = styled.button`
   }
 `;
 
+const MineField = styled.div`
+  height: 300px;
+  width: 330px;
+  background: grey;
+  position: absolute;
+  bottom: 0px;
+`;
+
 export default function App() {
   return (
     <GameContainer>
       <Timer>25</Timer>
       <FlagCounter>10</FlagCounter>
+      <MineField></MineField>
       <Smiley>😎</Smiley>
     </GameContainer>
   );
