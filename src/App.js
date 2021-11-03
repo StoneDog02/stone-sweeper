@@ -1,10 +1,12 @@
-import "./styles.css";
+import { css } from "@emotion/react";
+import styled from "@emotion/styled";
+
+const GameContainer = styled.div`
+  height: 330px;
+  width: 330px;
+  background: rebeccapurple;
+`;
 
 export default function App() {
-  return (
-    <div className="App">
-      <h1>Stone Sweeper</h1>
-      <h2>Coming to a computer near you...</h2>
-    </div>
-  );
+  return <GameContainer></GameContainer>;
 }
