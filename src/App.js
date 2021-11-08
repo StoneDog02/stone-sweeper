@@ -78,10 +78,19 @@ const NoMine = styled.div`
   align-items: center;
 `;
 
+const Bomb = styled.div`
+  height: 30px;
+  width: 30px;
+  background: red;
+`;
+function GetRandomBomb(max = 100) {
+  return Math.floor(Math.random() * max) + 1;
+}
+
 function GameButton() {
   const [buttonClicked, setButtonClicked] = useState(false);
   if (buttonClicked) {
-    return <NoMine>1</NoMine>;
+    return <Bomb></Bomb>;
   }
   return <Button onClick={() => setButtonClicked(true)}>0</Button>;
 }
