@@ -83,8 +83,17 @@ const Bomb = styled.div`
   width: 30px;
   background: red;
 `;
-function GetRandomBomb(max = 100) {
-  return Math.floor(Math.random() * max) + 1;
+
+function getRandomBomb() {
+  return Math.floor(Math.random() * 100);
+}
+
+function getNBombs() {
+  const Bomb = [];
+  while (Bomb.length < 10) {
+    const randomBomb = getRandomBomb();
+    if (Bomb.indexOf(randomBomb) === -1) Bomb.push(randomBomb);
+  }
 }
 
 function GameButton() {
