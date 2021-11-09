@@ -65,10 +65,10 @@ const MineField = styled.div`
 const Button = styled.button`
   height: 30px;
   width: 30px;
-  background: grey;
+  background: ${(props) => (props.isMarked ? "rebeccapurple" : "grey")};
   cursor: pointer;
 `;
-const NoMine = styled.div`
+const NoBomb = styled.div`
   height: 30px;
   width: 30px;
   background: grey;
@@ -92,29 +92,77 @@ function getNBombs(n, max) {
   const bombs = [];
   while (bombs.length < n) {
     const randomBomb = getRandomBomb(max);
-    if (bombs.indexOf(randomBomb) === -1) bombs.push(randomBomb);
+    if (!bombs.includes(randomBomb)) bombs.push(randomBomb);
   }
   return bombs;
 }
 
-function GameButton({ bombs }) {
-  console.log(bombs);
+function getBombCount(bombs, pos) {
+  let bombCount = 0;
+  if (bombs.includes(pos - 1) && pos % 10 !== 0) {
+    bombCount = bombCount + 1;
+  }
+  if (bombs.includes(pos + 1) && (pos + 1) % 10 !== 0) {
+    bombCount = bombCount + 1;
+  }
+  if (bombs.includes(pos - 10)) {
+    bombCount = bombCount + 1;
+  }
+  if (bombs.includes(pos + 10)) {
+    bombCount = bombCount + 1;
+  }
+  if (bombs.includes(pos - 10 + 1) && (pos + 1) % 10 !== 0) {
+    bombCount = bombCount + 1;
+  }
+  if (bombs.includes(pos + 10 + 1) && (pos + 1) % 10 !== 0) {
+    bombCount = bombCount + 1;
+  }
+  if (bombs.includes(pos - 10 - 1) && pos % 10 !== 0) {
+    bombCount = bombCount + 1;
+  }
+  if (bombs.includes(pos + 10 - 1) && pos % 10 !== 0) {
+    bombCount = bombCount + 1;
+  }
+  return bombCount ? bombCount : "";
+}
+
+function GameButton({ bombs, isBomb, pos }) {
   const [buttonClicked, setButtonClicked] = useState(false);
-  if (buttonClicked) {
+  const [isMarked, setIsMarked] = useState(false);
+  if (buttonClicked && isBomb) {
     return <Bomb></Bomb>;
   }
-  return <Button onClick={() => setButtonClicked(true)}>0</Button>;
+  if (buttonClicked && !isBomb) {
+    return <NoBomb>{getBombCount(bombs, pos)}</NoBomb>;
+  }
+  return (
+    <Button
+      isMarked={isMarked}
+      onContextMenu={(event) => {
+        event.preventDefault();
+        setIsMarked(!isMarked);
+      }}
+      onClick={() => setButtonClicked(true)}
+    ></Button>
+  );
 }
 
 export default function App() {
-  const [bombs, setBombs] = useState(getNBombs(10, 100));
+  const [bombs, setBombs] = useState(getNBombs(25, 100));
+  // const [bombs, setBombs] = useState([1, 3, 25, 15, 13]);
+  console.log(bombs);
   return (
     <GameContainer>
       <Timer>25</Timer>
       <FlagCounter>10</FlagCounter>
       <MineField>
-        {new Array(100).fill(undefined).map((item, i) => (
-          <GameButton bombs={[bombs]} />
+        {new Array(100).fill(undefined).map((item, pos) => (
+          <GameButton
+            key={pos}
+            bombs={bombs}
+            isBomb={bombs.includes(pos)}
+            pos={pos}
+          />
         ))}
       </MineField>
       <Smiley>😎</Smiley>
