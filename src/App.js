@@ -84,19 +84,21 @@ const Bomb = styled.div`
   background: red;
 `;
 
-function getRandomBomb() {
-  return Math.floor(Math.random() * 100);
+function getRandomBomb(max) {
+  return Math.floor(Math.random() * max);
 }
 
-function getNBombs() {
-  const Bomb = [];
-  while (Bomb.length < 10) {
-    const randomBomb = getRandomBomb();
-    if (Bomb.indexOf(randomBomb) === -1) Bomb.push(randomBomb);
+function getNBombs(n, max) {
+  const bombs = [];
+  while (bombs.length < n) {
+    const randomBomb = getRandomBomb(max);
+    if (bombs.indexOf(randomBomb) === -1) bombs.push(randomBomb);
   }
+  return bombs;
 }
 
-function GameButton() {
+function GameButton({ bombs }) {
+  console.log(bombs);
   const [buttonClicked, setButtonClicked] = useState(false);
   if (buttonClicked) {
     return <Bomb></Bomb>;
@@ -105,13 +107,14 @@ function GameButton() {
 }
 
 export default function App() {
+  const [bombs, setBombs] = useState(getNBombs(10, 100));
   return (
     <GameContainer>
       <Timer>25</Timer>
       <FlagCounter>10</FlagCounter>
       <MineField>
         {new Array(100).fill(undefined).map((item, i) => (
-          <GameButton />
+          <GameButton bombs={[bombs]} />
         ))}
       </MineField>
       <Smiley>😎</Smiley>
